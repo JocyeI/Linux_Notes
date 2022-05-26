@@ -1,0 +1,479 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>部署虚拟环境安装 Linux 系统</title><link href='./source/dy/iconfont.min.css' rel='stylesheet' type='text/css' />
+<link href='./source/zj/fonts.css' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root { --select-text-bg-color: #ffafa3; --focus-color: #ff5d52; --codeblockbg-color: #eee; --codeblockfont-color: #555; --codeblockline-color: #e0f8f8; --titlebefore-color: #00c4b6; --codeblocknum-color: rgba(128, 128, 255, 0.8); --blockquoteicon-color: #5fa7e4; --blockquotebg-color: #f4fcff; --ulol-color: #81accf; --tableevenrow-color: #eee; --tablefocusrow-color: #e0f8f8; --tableborder-color: #c5c5c5; --tablethbg-color: #f4fcff; --toc-color: #00a0a0; --atext-color: black; --abottom-color: #81d8cf; --code-color: #ff3502; --codebg-color: #f8f5ec; --footnote-color: #e96900; --footnotebg-color: #f8f8f8; --highlight-color: red; --highlightbg-color: yellow; --split-color: #00c4b6; --taskborder-color: red; --taskfocus-color: #00c4b6; --spannote-color: #e91e64; --emptext-color: #fe5f58; --hidetextcover-color: #a1a1a1; --hidetext-color: #444; --spanbtn-color: #44d7b6; --detailstxt-color: rgba(68,68,68,0.7); --detailsbg-color: #ebf9ed; --detailsborder-color: #00c4b6; --body-color: #000000; --para-color: #000000; --commonstr-color: #232629; --commonstrbg-color: #e3e6e8; --body-font: "Source Sans Pro", "等距更纱黑体 SC", "Helvetica Neue", Arial, sans-serif; --code-font: "JetBrains Mono"; }
+html { font-size: 17px; }
+body { font-family: var(--body-font); color: var(--body-color); -webkit-font-smoothing: antialiased; line-height: 1.8rem; letter-spacing: 0px; margin: 0px; overflow-x: hidden; }
+#write { max-width: 860px; margin: 0px auto; padding: 20px 30px 160px; }
+@media only screen and (min-width: 1800px) {
+  content { background: url("./source/bg.gif") 85% 100% / 12% no-repeat; }
+}
+#write p { line-height: 1.8rem; word-spacing: 0.05rem; color: var(--para-color); }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+body > :first-child { margin-top: 0px !important; }
+body > :last-child { margin-bottom: 0px !important; }
+#write a { border-bottom: 2px solid var(--abottom-color); padding: 0px 4px; transition: all 0.3s ease 0s; color: var(--atext-color); text-decoration: none; }
+#write a:hover { border-radius: 6px; border-bottom: 2px solid transparent; background-color: var(--abottom-color); color: rgba(255, 255, 255, 0.9); cursor: pointer; }
+#write a[href*="muggledy"] { border-bottom: 2px solid red; }
+#write a[href*="muggledy"]:hover { background-color: red; }
+#write h2 a, #write h4 a, #write a[alt="null"] { border-bottom: none !important; }
+h2 a:hover::before, h4 a:hover::before, #write a[alt="null"]:hover::before { content: none !important; }
+#write a:empty, #write a[alt="none"], #write a[alt="null"] { padding-left: 0px; padding-right: 0px; }
+#write a[alt="none"] span { display: none; }
+#write a[alt="null"]:hover { background-color: inherit; border-radius: 0px; color: var(--atext-color); }
+#write a.md-toc-inner { line-height: 1.6; white-space: pre-line; border-bottom: none; color: var(--toc-color); }
+.md-toc { margin-top: 50px; padding-bottom: 20px; }
+#write a.md-toc-inner:hover { text-decoration: underline; color: var(--toc-color); background-color: inherit; border-radius: 0px; }
+#write a.md-toc-inner code { color: var(--toc-color); background-color: rgb(243, 244, 244); }
+#write a.md-toc-inner:hover::before { content: none !important; }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 code { font-size: inherit !important; }
+h2 code { font-size: inherit !important; }
+h3 code { font-size: inherit !important; }
+h4 code { font-size: inherit !important; }
+h5 code { font-size: inherit !important; }
+h6 code { font-size: inherit !important; }
+h1 { text-align: center; padding-bottom: 0.3em; font-size: 2.2em; line-height: 1.2; margin: 2.4em auto 1.2em; color: black; }
+h2 { margin: 1.8em auto 1.2em; font-size: 1.8em; border-bottom: 2px solid var(--titlebefore-color); }
+h2::before { color: var(--titlebefore-color); font-family: iconfont; content: "" !important; }
+@-webkit-keyframes avatar_turn_around { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes avatar_turn_around { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+h2::before { display: inline-block; animation: 1s linear 0s infinite normal none running avatar_turn_around; font-size: 34px; margin-left: -29px; }
+h2 * { margin-left: 0.18rem; }
+#write > h2.md-focus::before { color: var(--focus-color); }
+#write > h2.md-focus { border-bottom-color: var(--focus-color); }
+.about-content-description h2::before { content: none !important; }
+.about-content-description h2 { border-bottom: none; }
+h3 { font-size: 1.4em; line-height: 1.43; margin: 1.6em auto 1.2em; padding-left: 9px; border-left: 5px solid var(--titlebefore-color); }
+h4 { margin-top: 1.3em; font-size: 1.2em; padding-left: 6px; padding-right: 6px; display: inline-block; border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-top: 4px solid var(--titlebefore-color); }
+#write > h3.md-focus::before, #write > h4.md-focus::before { width: auto; height: auto; background-color: var(--focus-color); color: rgb(255, 255, 255); }
+#write > h3.md-focus, #write > h4.md-focus { border-color: var(--focus-color); }
+#write h5::before, #write h6::before { position: absolute; right: calc(100% + 0.75em); top: 0px; color: var(--titlebefore-color); font-size: 0.8rem; font-weight: bold; white-space: nowrap; border: 0px; }
+#write h5.md-focus::before, #write h6.md-focus::before { color: var(--focus-color); }
+#write h5, #write h6 { font-size: 1rem; }
+#write h5::before { content: "H5"; top: 0.18rem; }
+#write h6::before { content: "H6"; top: 0.18rem; }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+body > h2:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child + h2 { margin-top: 0px; padding-top: 0px; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child { margin-top: 0px; padding-top: 0px; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 { margin-top: 0px; padding-top: 0px; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p { margin-top: 0px; }
+#write ol, #write ul { padding-left: 35px; margin: 0.5rem 0px; }
+#write ol > li > *, #write ul > li > * { color: rgb(51, 51, 51); font-weight: normal; }
+#write ol > li > :not(ol):not(ul), #write ul > li > :not(ol):not(ul) { padding-left: 0.25rem; }
+blockquote { border-left: 5px solid var(--blockquoteicon-color); padding: 10px 15px; color: rgb(63, 63, 63); background-color: var(--blockquotebg-color); border-radius: 3px; position: relative; }
+blockquote > * { margin-left: 2rem !important; }
+blockquote::before { content: ""; font-family: iconfont; color: var(--blockquoteicon-color); position: absolute; top: 50%; transform: translateY(-50%); font-size: large; font-weight: 600; }
+table { padding: 0px; word-break: initial; font-size: 12pt; }
+table tr:nth-child(2n) { background-color: var(--tableevenrow-color); }
+table tr th { font-weight: bold; border-top-color: ; border-top-style: ; border-top-width: ; border-right-color: ; border-right-style: ; border-right-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; background-color: var(--tablethbg-color); border-bottom: 0px; text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid var(--tableborder-color); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+table tr:hover { background-color: var(--tablefocusrow-color); }
+div[alt="three-table"] table { border-top: 1.5pt solid; border-bottom: 1.5pt solid; font-size: 11pt; }
+div[alt="three-table"] table tr td, div[alt="three-table"] table tr th { border: none; }
+div[alt="three-table"] table tr, div[alt="three-table"] table tr th, div[alt="three-table"] table tr:hover { background-color: white; }
+div[alt="three-table"] table tr th { border-bottom: 0.75pt solid; font-family: 黑体; font-size: 11pt; }
+[alt="center"] { text-align: center; }
+[alt="left"] { text-align: left; }
+[alt="right"] { text-align: right; }
+div[alt="notitle-table"] table { font-size: 11pt; }
+div[alt="notitle-table"] table tr, div[alt="notitle-table"] table tr th, div[alt="notitle-table"] table tr:hover { background-color: white; }
+div[alt="notitle-table"] table tr td:hover, div[alt="notitle-table"] table tr th:hover { background-color: var(--tablefocusrow-color); }
+div[alt="notitle-table"] table tr th { font-weight: normal; }
+div[alt="notitle-table"] table tr th, div[alt="notitle-table"] table tr td { padding: 0px 8px; }
+#write .CodeMirror pre { font-family: var(--code-font); font-size: 0.95em; padding-left: 12px; }
+.md-fences { background: var(--codeblockbg-color); border-radius: 3px; color: var(--codeblockfont-color); overflow-wrap: break-word; line-height: 1.6em; }
+.cm-s-inner .CodeMirror-linenumber { color: var(--codeblocknum-color); }
+#write .CodeMirror-cursors .CodeMirror-cursor { border-left: 2px solid var(--focus-color); }
+.md-fences:not(.md-focus) .CodeMirror-code > :hover { background-color: var(--codeblockline-color); }
+.md-fences.md-focus .CodeMirror-code > div.CodeMirror-activeline { background-color: var(--codeblockline-color); }
+#write ol > li > [class~="md-fences"], #write ul > li > [class~="md-fences"] { padding-left: 0px !important; }
+@media only screen and (max-width: 800px) {
+  .MathJax_SVG_Display svg { max-width: inherit !important; }
+}
+#write code { padding: 2px 4px; border-radius: 2px; font-family: var(--code-font); font-size: 0.9rem; color: var(--code-color); background-color: var(--codebg-color); }
+#write .md-footnote { background-color: var(--footnotebg-color); color: var(--footnote-color); }
+#write sup.md-footnote a { border-bottom: none; padding: 1px; background-color: inherit; color: inherit !important; }
+#write span[md-inline="highlight"] mark { background-color: var(--highlightbg-color); border-radius: 2px; padding: 2px 4px; margin: 0px 2px; color: var(--highlight-color); font-weight: 500; }
+hr { width: 80%; margin: 0px auto; border: 0px; height: 2px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--split-color), rgba(0, 0, 0, 0)); }
+#write del { padding: 1px 2px; }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(34, 162, 201); }
+.cm-s-inner .cm-string { color: rgb(34, 162, 201); }
+.md-task-list-item > input { margin-left: -1.3em; margin-top: 0.4rem; -webkit-appearance: none; }
+.md-task-list-item > input::before { content: ""; display: inline-block; width: 0.875rem; height: 0.875rem; vertical-align: middle; text-align: center; font-size: 0.8rem; color: white; border-radius: 2px; border: 1px solid var(--taskborder-color); margin-top: -0.4rem; transition: all 0.2s linear 0s; }
+.md-task-list-item > input:checked::before, .md-task-list-item > input[checked]::before { content: "✔"; font-size: 0.625rem; color: white; border: 1px solid var(--taskfocus-color); background-color: var(--taskfocus-color); line-height: 0.8rem; }
+.md-task-list-item::before { content: none !important; }
+#write input[type="checkbox"] { position: absolute; top: 6px; left: -6px; background-color: inherit; }
+.md-task-list-item.task-list-done { text-decoration: line-through; color: rgb(153, 153, 153); }
+.md-task-list-item.task-list-done span { color: rgb(153, 153, 153); }
+.md-diagram-panel svg { max-width: inherit !important; height: inherit !important; }
+#write pre.md-meta-block { font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+details pre { color: rgb(68, 68, 68); margin: 15px auto; padding: 20px 15px 0px; background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAmCAIAAACphTeFAAAAJElEQVRIx2N4RS5gGNU5qnNU56hOZJ2fyQWjOkd1juoc1YkMAKDL4lkok3p7AAAAAElFTkSuQmCC") 0% 0% / 100% 44px repeat rgb(255, 255, 255); white-space: pre-wrap; overflow-wrap: break-word; letter-spacing: 1.5px; font: 14px/22px "Comic Sans MS", "courier new"; }
+.md-image { margin: 15px auto 5px; }
+.md-image img { border-radius: 4px; }
+.md-image img[alt|="shadow"] { box-shadow: rgb(132, 161, 168) 0px 10px 15px; background-size: 100% 100%; cursor: default; border-left: 0px; border-right: 0px; }
+.md-image img[alt|="blur"] { filter: blur(6px); transition: all 0.2s linear 0s; }
+.md-image img[alt|="blur"]:hover { filter: none; }
+.md-image img[alt|="gray"] { filter: grayscale(100%); }
+.md-image img[alt|="gray"]:hover { transition: all 0.5s linear 0s; filter: grayscale(0); }
+.md-image > .md-meta { border-radius: 3px; font-family: var(--body-font); padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+#write { counter-reset: imgNum 0; }
+#write p > .md-image::after { counter-increment: imgNum 1; text-align: center; width: 100%; display: inline-block; font-size: small; content: "图" counter(imgNum) attr(alt) !important; margin-top: 8px !important; }
+div[alt="fig"] { font-size: small; text-align: center; margin-top: -10px !important; }
+.md-tag { color: inherit; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+#md-notification::before { top: 10px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: var(--body-font); }
+.file-node-content:hover .file-node-icon { color: var(--titlebefore-color); }
+.file-node-content:hover { cursor: pointer; color: var(--titlebefore-color)  !important; }
+.outline-item:hover { color: var(--titlebefore-color)  !important; }
+.md-lang { color: rgb(180, 101, 77); }
+.html-for-mac .context-menu { --item-hover-bg-color: #e6f0fe; }
+.file-list-item:hover { background-color: rgb(238, 238, 238); }
+@media print {
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html { font-size: 16px !important; }
+  body { font-family: Times, SimSun, serif !important; color: rgb(0, 0, 0) !important; }
+  p { color: rgb(0, 0, 0) !important; }
+  table, pre { break-inside: avoid; }
+  pre { overflow-wrap: break-word; }
+  .MathJax_SVG_Display svg { max-width: 100% !important; }
+}
+#write ul li, #write ol li, #write .ul .li, #write .ol .li { list-style-type: none; }
+#write ul > li:not(.tab)::before, #write .ul > .li:not(.tab)::before { margin-left: -22px; margin-top: 10px; width: 0.62em; height: 0.62em; border: 0.1em solid var(--ulol-color); border-radius: 0.31em; background: 0px 0px; content: ""; line-height: 0.42em; }
+#write ol li::before, #write ul li::before, #write .ol .li::before, #write .ul .li::before { position: absolute; background: var(--ulol-color); color: rgb(255, 255, 255); cursor: pointer; transition: all 0.3s ease-out 0s; }
+#write ol li:first-child, #write .ol .li:first-child { counter-reset: li 0; }
+#write ol li:hover::before, #write ul li:hover::before, #write .ol .li:hover::before, #write .ul .li:hover::before { transform: rotate(360deg); }
+#write ul > li:not(.tab):hover::before, #write .ul > .li:not(.tab):hover::before { border-color: var(--focus-color); }
+#write ol > li::before, #write .ol > .li::before { margin-top: 6px; margin-left: -25px; width: 1.65em; height: 1.65em; border-radius: 0.825em; content: counter(li); counter-increment: li 1; text-align: center; font-size: 0.65em; line-height: 1.7em; }
+#write ul li *, #write ol li *, #write .ul .li *, #write .ol .li * { margin-top: 0px; margin-bottom: 0px; }
+#write ul li, #write ol li, #write .ul .li, #write .ol .li { margin-top: 7px; margin-bottom: 7px; }
+font { display: inline; padding: 0.2em 0.6em; font-size: 90%; font-weight: 400; line-height: 1; color: rgb(255, 255, 255); text-align: center; white-space: nowrap; vertical-align: baseline; border-radius: 6px; background-color: var(--spannote-color); }
+font[title="red"] { background-color: rgb(233, 30, 100); }
+font[title="blue"] { background-color: rgb(2, 170, 244); }
+font[title="yellow"] { background-color: rgb(255, 197, 10); }
+font[title="green"] { background-color: rgb(139, 195, 74); }
+font[title="gray"] { background-color: rgb(76, 76, 76); }
+span[alt="emp"] { border-bottom: 4px dotted var(--emptext-color); }
+span[alt="underline"] { border-bottom: 2px solid var(--emptext-color); }
+span[alt="wavy"] { text-decoration-style: wavy; text-decoration-line: underline; text-decoration-color: var(--emptext-color); }
+details { display: block; padding: 16px; margin: 1em 0px; border-radius: 4px; background: rgb(255, 255, 255); font-size: 14px; transition: all 0.28s ease 0s; border: 1px solid rgb(246, 246, 246); }
+summary { display: list-item; }
+details summary { cursor: pointer; padding: 16px; margin: -16px; border-radius: 4px; color: var(--detailstxt-color); font-weight: 700; position: relative; line-height: normal; font-size: 0.875rem !important; }
+details > summary { background: var(--detailsbg-color); }
+details[open] { border-color: var(--detailsborder-color); }
+details[open] > summary { color: rgb(68, 68, 68); margin-bottom: 0px; }
+details[open] > summary { border-bottom: 1px solid var(--detailsborder-color); border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; }
+summary:focus { outline: none !important; }
+video:focus { outline: none !important; }
+audio:focus { outline: none !important; }
+span[alt="hide"] { color: transparent; background: var(--hidetextcover-color); border-radius: 2px; transition: all 0.28s ease 0s; }
+span[alt="hide"]:hover { color: var(--hidetext-color); background: 0px 0px; }
+@-webkit-keyframes rainbowan { 
+  100% { background-position: -2000vw center; }
+}
+@keyframes rainbowan { 
+  100% { background-position: -2000vw center; }
+}
+span[alt="rainbow"], span[alt="rainbow"] * { padding-top: 3px; background-image: linear-gradient(to left, orangered, orange, gold, lightgreen, cyan, dodgerblue, mediumpurple, hotpink, orangered); background-size: 110vw; background-clip: text; color: transparent; animation: 60s linear 0s infinite normal none running rainbowan; }
+span[alt="modern"] { display: inline; padding: 5px 10px; border-radius: 20px; font-family: var(--body-font); font-size: 1em; letter-spacing: 0.2em; color: red; text-shadow: rgb(196, 181, 157) 0px 8px 9px, rgb(255, 255, 255) 0px -2px 1px; font-weight: 700; background: linear-gradient(rgb(236, 228, 217) 0px, rgb(233, 223, 209) 100%); }
+span[alt="btn"] { color: var(--spanbtn-color); border: 1px solid var(--spanbtn-color); padding: 3px 4px 2px; margin: 4px; line-height: 1.1; border-radius: 2px; }
+#write span[alt="btn"] a { color: var(--spanbtn-color); border-bottom: none; background-color: inherit; transition: none 0s ease 0s; }
+span[alt="btn"]:hover { color: var(--focus-color); border: 1px solid var(--focus-color); }
+#write span[alt="btn"]:hover a { color: var(--focus-color); }
+@-webkit-keyframes uk-text-shadow-glitch { 
+  0% { text-shadow: none; }
+  25% { text-shadow: rgb(255, 0, 72) -1px -1px 0px, rgb(50, 52, 255) 1px 1px 0px; }
+  50% { text-shadow: rgb(255, 0, 72) 1px -1px 0px, rgb(50, 52, 255) -1px 1px 0px; }
+  75% { text-shadow: rgb(255, 0, 72) -1px 1px 0px, rgb(50, 52, 255) 1px -1px 0px; }
+  100% { text-shadow: rgb(255, 0, 72) 1px 1px 0px, rgb(50, 52, 255) -1px -1px 0px; }
+}
+@keyframes uk-text-shadow-glitch { 
+  0% { text-shadow: none; }
+  25% { text-shadow: rgb(255, 0, 72) -1px -1px 0px, rgb(50, 52, 255) 1px 1px 0px; }
+  50% { text-shadow: rgb(255, 0, 72) 1px -1px 0px, rgb(50, 52, 255) -1px 1px 0px; }
+  75% { text-shadow: rgb(255, 0, 72) -1px 1px 0px, rgb(50, 52, 255) 1px -1px 0px; }
+  100% { text-shadow: rgb(255, 0, 72) 1px 1px 0px, rgb(50, 52, 255) -1px -1px 0px; }
+}
+span[alt="shake"] { animation: 0.95s cubic-bezier(1, -1.91, 0, 2.79) 0s infinite normal both running uk-text-shadow-glitch; }
+span[alt="glow"] { font-family: Audiowide; text-align: center; color: black; transition: all 1.5s ease 0s; }
+span[alt="glow"]:hover { animation: 1.5s ease 0s infinite alternate none running Glow; }
+@-webkit-keyframes Glow { 
+  0% { text-shadow: rgb(255, 255, 255) 0px 0px 10px, rgb(255, 255, 255) 0px 0px 20px, rgb(255, 255, 255) 0px 0px 30px, rgb(0, 166, 124) 0px 0px 40px, rgb(0, 166, 124) 0px 0px 70px, rgb(0, 166, 124) 0px 0px 80px, rgb(0, 166, 124) 0px 0px 100px, rgb(0, 166, 124) 0px 0px 150px; }
+  100% { text-shadow: rgb(255, 255, 255) 0px 0px 5px, rgb(255, 255, 255) 0px 0px 10px, rgb(255, 255, 255) 0px 0px 15px, rgb(0, 166, 124) 0px 0px 20px, rgb(0, 166, 124) 0px 0px 35px, rgb(0, 166, 124) 0px 0px 40px, rgb(0, 166, 124) 0px 0px 50px, rgb(0, 166, 124) 0px 0px 75px; }
+}
+@keyframes Glow { 
+  0% { text-shadow: rgb(255, 255, 255) 0px 0px 10px, rgb(255, 255, 255) 0px 0px 20px, rgb(255, 255, 255) 0px 0px 30px, rgb(0, 166, 124) 0px 0px 40px, rgb(0, 166, 124) 0px 0px 70px, rgb(0, 166, 124) 0px 0px 80px, rgb(0, 166, 124) 0px 0px 100px, rgb(0, 166, 124) 0px 0px 150px; }
+  100% { text-shadow: rgb(255, 255, 255) 0px 0px 5px, rgb(255, 255, 255) 0px 0px 10px, rgb(255, 255, 255) 0px 0px 15px, rgb(0, 166, 124) 0px 0px 20px, rgb(0, 166, 124) 0px 0px 35px, rgb(0, 166, 124) 0px 0px 40px, rgb(0, 166, 124) 0px 0px 50px, rgb(0, 166, 124) 0px 0px 75px; }
+}
+span[alt="hollow"] { color: white; text-shadow: black 1px 1px, black -1px -1px, black 1px -1px, black -1px 1px; }
+@keyframes blink-smooth { 
+  50% { color: transparent; }
+}
+span[alt="blink"] { animation: 0.5s linear 0s infinite alternate none running blink-smooth; }
+span[alt="str"] { padding: 2px 4px; color: var(--commonstr-color); background-color: var(--commonstrbg-color); border-radius: 3px; font-size: 15px; font-family: var(--body-font); }
+div[alt="timeline"] { margin-top: 8px; margin-left: 8px; }
+div[alt="timenode"] { position: relative; }
+div[alt="timenode"]::after, div[alt="timenode"]::before { content: ""; z-index: 1; position: absolute; background: rgba(68, 215, 182, 0.5); width: 2px; left: 7px; }
+div[alt="timenode"]::before { top: 0px; height: 6px; }
+div[alt="timenode"] div[alt="body"], div[alt="timenode"] div[alt="meta"] { max-width: calc(100% - 24px); }
+div[alt="timenode"] div[alt="meta"] { position: relative; color: rgb(31, 45, 61); line-height: 32px; font-size: 0.8rem; font-weight: 700; margin: 0px 0px 0px 24px; }
+div[alt="timenode"] div[alt="meta"]::after, div[alt="timenode"] div[alt="meta"]::before { content: ""; position: absolute; top: 8px; z-index: 2; left: -24px; }
+div[alt="timenode"] div[alt="meta"]::before { background: rgba(68, 215, 182, 0.5); width: 16px; height: 16px; border-radius: 8px; }
+div[alt="timenode"] div[alt="meta"]::after { background: rgb(68, 215, 182); margin-left: 2px; margin-top: 2px; width: 12px; height: 12px; border-radius: 6px; transform: scale(0.5); }
+div[alt="timenode"] div[alt="body"] { margin: 4px 0px 10px 24px; padding: 10px; border-radius: 12px; background: rgb(239, 237, 237); display: inline-block; font-size: 0.9rem; }
+div[alt="timenode"]:not(:last-child)::after { top: 26px; height: calc(100% - 26px); }
+div[alt="timenode"]:last-child::after { top: 26px; height: calc(100% - 30px); }
+div[alt="timenode"]:hover div[alt="meta"] { color: rgb(68, 68, 68); }
+div[alt="timenode"]:hover div[alt="meta"]::before { background: rgba(255, 87, 34, 0.5); }
+div[alt="timenode"]:hover div[alt="meta"]::after { background: rgb(255, 87, 34); transform: scale(1); }
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name="部署虚拟环境安装-linux-系统" class="md-header-anchor"></a><span>部署虚拟环境安装 Linux 系统 </span></h1><h2><a name="👥准备工具" class="md-header-anchor"></a><span>👥准备工具 </span></h2><figure><table><thead><tr><th style='text-align:center;' ><em><span>VM</span></em></th><th style='text-align:center;' ><em><span>CentOS7</span></em></th></tr></thead><tbody><tr><td style='text-align:center;' ><span>VMware Wordkstation Pro(16)</span></td><td style='text-align:center;' ><span>CentOS-7-x86_64-Minimal-2009.iso</span></td></tr></tbody></table></figure><p><em><span>安装包已上传至百度网盘</span><a href='https://pan.baidu.com/s/1JQWAWRs8WoRqX77xq5Vk0w '><span>点击下载链接</span></a></em></p><p><em><span>提取码：VMLM</span></em></p><p><span>官网下载链接： 进入</span><a href='https://www.vmware.com/cn.html'><span>VMware官网</span></a><span>(地址：</span><a href='https://www.vmware.com/cn.html' target='_blank' class='url'>https://www.vmware.com/cn.html</a><span>)，点击上方导航栏中的工作空间站，再点击图中标记的Workstation Pro，如下图所示： </span></p><p><img src="Images/1649850991348.png" referrerpolicy="no-referrer" alt="1649850991348"></p><p><span> </span><em><span>根据操作系统选择合适的产品，在这里以Windows系统为例，点击转至下载，如下图所示：</span></em><span> </span></p><p><img src="Images/1649851088903.png" referrerpolicy="no-referrer" alt="1649851088903"></p><p><em><span>选择WINDOWS版本，开始下载</span></em></p><p><img src="Images/1649851195094.png" referrerpolicy="no-referrer" alt="1649851195094"></p><p><em><span>开始下载VM软件</span></em></p><p><img src="Images/1649851326948.png" referrerpolicy="no-referrer" alt="1649851326948"></p><h2><a name="🗜-安装配置-vm-虚拟机" class="md-header-anchor"></a><span>🗜 安装配置 VM 虚拟机  </span></h2><p><em><span>VMware WorkStation 虚拟机软件是一款桌面计算机虚拟软件，让用户能够在单一主机 上同时运行多个不同的操作系统。每个虚拟操作系统的硬盘分区、数据配置都是独立的， 而且多台虚拟机可以构建为一个局域网。Linux 系统对硬件设备的要求很低，我们没有必 要再买一台电脑，课程实验用虚拟机完全可以搞定，而且 VM 还支持实时快照、虚拟网络、 拖曳文件以及 PXE（Preboot Execute Environment，预启动执行环境）网络安装等方便实 用的功能。</span></em><span> </span></p><h3><a name="安装过程" class="md-header-anchor"></a><span>安装过程</span></h3><p><span>1、运行下载完成的 Vmware Workstation 虚拟机软件包，将会看到如图所示的虚拟机程序安装向导初始界面(此处以上文准备工具为列)。 </span></p><p><img src="Images/1649850354370.png" referrerpolicy="no-referrer" alt="1649850354370"></p><p><span>2、 在虚拟机软件的安装向导界面单击“下一步”按钮 </span></p><p><img src="Images/1649851738948.png" referrerpolicy="no-referrer" alt="1649851738948"></p><p><span>3、 在最终用户许可协议界面选中“我接受许可协议中的条款”复选框，然后单击“下一步” 按钮 </span></p><p><img src="Images/1649851808215.png" referrerpolicy="no-referrer" alt="1649851808215"></p><p><span>4、选择虚拟机软件的安装位置（可选择默认位置），选中“增强型键盘驱动程序”复选框后 单击“下一步”按钮。 </span></p><p><img src="Images/1649852218367.png" referrerpolicy="no-referrer" alt="1649852218367"></p><p><span>5、根据自身情况适当选择“启动时检查产品更新”与“帮助完善 VMware Workstation Pro” 复选框，然后单击“下一步”按钮，如图所示。 </span></p><p><img src="Images/1649852041886.png" referrerpolicy="no-referrer" alt="1649852041886"></p><p><span>6、选中“桌面”和“开始菜单程序文件夹”复选框，然后单击“下一步”按钮，如图所示。  </span></p><p>&nbsp;</p><p><img src="Images/1649852305722.png" referrerpolicy="no-referrer" alt="1649852305722"></p><p><span>7、点击开始安装</span></p><p><img src="Images/1649852419478.png" referrerpolicy="no-referrer" alt="1649852419478"></p><p><span>8、 一切准备就绪后，单击“安装”按钮 ，等待安装。 进入安装过程，此时要做的就是耐心等待虚拟机软件的安装过程结束 </span></p><p><img src="Images/1649852467642.png" referrerpolicy="no-referrer" alt="1649852467642"></p><p><span>9、输入许可证</span></p><p><strong><span>VM激活码</span></strong></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="SQL"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="sql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ZF3R0-FHED2-M80TY-<span class="cm-number">8</span>QYGC-NPKYF</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">YF390-<span class="cm-number">0</span>HF8P-M81RQ-<span class="cm-number">2</span>DXQE-M2UT6</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ZF71R-DMX85-<span class="cm-number">08</span>DQY-<span class="cm-number">8</span>YMNC-PPHV8</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre><p><img src="Images/1649852816937.png" referrerpolicy="no-referrer" alt="1649852816937"></p><p><span>10、完成安装</span></p><p><img src="Images/1649852873305.png" referrerpolicy="no-referrer" alt="1649852873305"></p><p><span>11、双击桌面上生成的虚拟机快捷图标，在弹出的如图的界面中，此时便看到了虚拟机软件的管理界面 </span></p><p><img src="Images/1649853192350.png" referrerpolicy="no-referrer" alt="1649853192350"></p><p><span>12、点击左上角·编辑·选择</span><strong><span>虚拟网络编辑器</span></strong></p><p><img src="Images/1649853600588.png" referrerpolicy="no-referrer" alt="1649853600588"></p><p><span>13、在windows上配置vmnet8，点击控制面板 · 网络和Internet · 网络和共享中心 · 更改适配器</span></p><p><img src="Images/1649854083173.png" referrerpolicy="no-referrer" alt="1649854083173"></p><p><span>14、配置vmnet8，右键打开·选择属性，进入下一步配置</span></p><p><img src="Images/1649854263426.png" referrerpolicy="no-referrer" alt="1649854263426"></p><p><span>15、进入属性后，配置vmnet8</span></p><p><img src="Images/1649854384086.png" referrerpolicy="no-referrer" alt="1649854384086"></p><p><span>16、配置虚拟机虚拟网络设置</span></p><p><img src="Images/1649855115460.png" referrerpolicy="no-referrer" alt="1649855115460"></p><p><mark><span>注意</span></mark><span>：可能出现子网IP和子网掩码不匹配的情况，解决方案为</span></p><p><img src="Images/1649855037372.png" referrerpolicy="no-referrer" alt="1649855037372"></p><h2><a name="🔑centos7参数配置" class="md-header-anchor"></a><span>🔑CentOS7参数配置</span></h2><h3><a name="新建虚拟机" class="md-header-anchor"></a><span>新建虚拟机</span></h3><p><em><span>注意，在安装完虚拟机之后，不能立即安装 Linux 系统，因为还要在虚拟机内设置操 1.2 安装配置 VM 虚拟机  7 作系统的硬件标准。只有把虚拟机内系统的硬件资源模拟出来后才可以正式步入 Linux系统安装之旅。VM 虚拟机的强大之处在于不仅可以调取真实的物理设备资源，还可以模拟出多网卡或硬盘等资源，因此完全可以满足对学习环境的需求</span></em><span> 。</span></p><p><span>1、单击“创建新的虚拟机”选项，并在弹出的“新建虚拟机向导”界面中选择“自定义”单选按钮，然后单击“下一步”按钮 </span></p><p><img src="Images/1649855399858.png" referrerpolicy="no-referrer" alt="1649855399858"></p><p>&nbsp;</p><p><span>2、默认选择下一步</span></p><p><img src="Images/1649855461245.png" referrerpolicy="no-referrer" alt="1649855461245"></p><p><span>3、选择安装程序光盘映像，选中“稍后安装操作系统”单选按钮，然后单击“下一步”按钮 </span></p><p><img src="Images/1649855630901.png" referrerpolicy="no-referrer" alt="1649855630901"></p><p><img src="Images/1649855767770.png" referrerpolicy="no-referrer" alt="1649855767770"></p><p><span>4、 将客户机操作系统的类型选择为“Linux”，版本为“CentOS7 64 位”，然后单击“下一步”按钮。 </span></p><p><img src="Images/1649855885093.png" referrerpolicy="no-referrer" alt="1649855885093"></p><p><span>5、 填写“虚拟机名称”字段，并在选择安装位置之后单击“下一步”按钮 </span><img src="Images/1649856066679.png" referrerpolicy="no-referrer" alt="1649856066679"></p><p><span>6、处理器配置，完成①，②，选择下一步</span></p><p>&nbsp;</p><p><img src="Images/1649856173769.png" referrerpolicy="no-referrer" alt="1649856173769"></p><p><span>7、配置虚拟机运行内存的大小，选择下一步</span></p><p><img src="Images/1649856252186.png" referrerpolicy="no-referrer" alt="1649856252186"></p><p><span>8、选择虚拟机网络连接类型，选择下一步</span></p><p><img src="Images/1649856346102.png" referrerpolicy="no-referrer" alt="1649856346102"></p><p><span>9、选择I/O控制器类型，默认即可，选择下一步</span></p><p><img src="Images/1649856404232.png" referrerpolicy="no-referrer" alt="1649856404232"></p><p><span>10、选择创建磁盘类型，默认即可，选择下一步</span></p><p><img src="Images/1649856464372.png" referrerpolicy="no-referrer" alt="1649856464372"></p><p><span>11、创建虚拟磁盘，默认即可，选择下一步</span></p><p><img src="Images/1649856517356.png" referrerpolicy="no-referrer" alt="1649856517356"></p><p><span>12、设置磁盘容量大小，选择下一步</span></p><p><img src="Images/1649856606908.png" referrerpolicy="no-referrer" alt="1649856606908"></p><p><span>13、设置磁盘容量存放位置，设置容量大小，选择下一步</span></p><p><img src="Images/1649856720348.png" referrerpolicy="no-referrer" alt="1649856720348"></p><p><span>14、完成虚拟机安装配置，点击完成</span></p><p><img src="Images/1649856816552.png" referrerpolicy="no-referrer" alt="1649856816552"></p><h2><a name="📖centos7安装教程" class="md-header-anchor"></a><span>📖CentOS7安装教程</span></h2><h3><a name="安装导向" class="md-header-anchor"></a><span>安装导向</span></h3><p><em><span>安装 RHEL 7 或 CentOS 7 系统时，电脑的 CPU 需要支持 VT（Virtualization  Technology，虚拟化技术）。所谓 VT，指的是让单台计算机能够分割出多个独立资源区，并让每个资源区按照需要模拟出系统的一项技术，其本质就是通过中间层实现计 算机资源的管理和再分配，让系统资源的利用率最大化。其实只要电脑不是五六年前买的，价格不低于三千元，它的 CPU 就肯定会支持 VT 的。如果开启虚拟机后依 然提示“CPU 不支持 VT 技术”等报错信息，请重启电脑并进入到 BIOS 中把 VT 虚拟 化功能开启即可。</span></em><span> </span></p><p><span>1、上文对VM虚拟机软件进行了安装，配置好了CentOS7启动参数配置，新建的CentOS7虚拟机在左上方，接下来需要做一些前置工作，确定光盘文件是否连接上，双击选择。</span></p><p><img src="Images/1649857452573.png" referrerpolicy="no-referrer" alt="1649857452573"></p><p><img src="Images/1649857429934.png" referrerpolicy="no-referrer" alt="1649857429934"></p><p><span>2、选择开启虚拟机，进入安装界面</span></p><p><img src="Images/1649857574259.png" referrerpolicy="no-referrer" alt="1649857574259"></p><p><span>3、 在虚拟机管理界面中单击“开启此虚拟机”按钮后数秒就看到 CentOS7 系统安装界面， 如图所示。在界面中，Test this media &amp; install CentOS 7.0 和 Troubleshooting 的作用分别是校验光盘完整性后再安装以及启动救援模式。此时通过键盘的方向键选择 Install CentOS 7.0 选项来直接安装Linux 系统。 双击进入屏幕，上箭头选择InStall CentOS 7，按一下enter</span></p><p><img src="Images/1649857650878.png" referrerpolicy="no-referrer" alt="1649857650878"></p><p><span>4、进入安装界面， 选择系统的安装语言后单击 Continue 按钮 </span></p><p><img src="Images/1649857800347.png" referrerpolicy="no-referrer" alt="1649857800347"></p><p><span>5、配置时区，选择DATE&amp;TIME</span></p><p><img src="Images/1649858242415.png" referrerpolicy="no-referrer" alt="1649858242415"></p><p><span>6、选择键盘(Keybord)，输入为English</span></p><p><img src="Images/1649858350975.png" referrerpolicy="no-referrer" alt="1649858350975"></p><p><span>7、选择 INSTALLATION SOURCE，选择 Verify，然后点击Done，再点击左上方的Done</span></p><p><img src="Images/1649858506574.png" referrerpolicy="no-referrer" alt="1649858506574"></p><p><span>8、因为本教程为CentOS7的精简版，选择默认即可，如果镜像不是精简版，则需要自行选择安装。</span></p><p><img src="Images/1649858623658.png" referrerpolicy="no-referrer" alt="1649858623658"></p><p><span>9、为磁盘分区，选择INSTALL DESTINATION（Automation partioning selected）</span></p><p><img src="Images/1649858881977.png" referrerpolicy="no-referrer" alt="1649858881977"></p><p><span>①进行手动分区</span></p><p><img src="Images/1649858947374.png" referrerpolicy="no-referrer" alt="1649858947374"></p><p><span>②选择/biosboot</span></p><p><img src="Images/1649859063963.png" referrerpolicy="no-referrer" alt="1649859063963"></p><p><span>③选择/swap</span></p><p><img src="Images/1649859180584.png" referrerpolicy="no-referrer" alt="1649859180584"></p><p><span>④选择/var</span></p><p><img src="Images/1649859245042.png" referrerpolicy="no-referrer" alt="1649859245042"></p><p><span>⑤选择/boot</span></p><p><img src="Images/1649859302866.png" referrerpolicy="no-referrer" alt="1649859302866"></p><p><span>⑥选择/home</span></p><p><img src="Images/1649859366864.png" referrerpolicy="no-referrer" alt="1649859366864"></p><p><span>⑦选择/</span></p><p><img src="Images/1649859444162.png" referrerpolicy="no-referrer" alt="1649859444162"></p><p><img src="Images/1649859682008.png" referrerpolicy="no-referrer" alt="1649859682008"></p><p><span>10、选择NETWORK &amp; HOST NAME，最后点击Done进行确认</span></p><p><img src="Images/1649859812994.png" referrerpolicy="no-referrer" alt="1649859812994"></p><p><span>11、，点击Beign Installation，开始正式进行安装</span></p><p><img src="Images/1649859961702.png" referrerpolicy="no-referrer" alt="1649859961702"></p><p><span>12、安装过程中，设置root账号密码</span></p><p><img src="Images/1649860052322.png" referrerpolicy="no-referrer" alt="1649860052322"></p><p><img src="Images/1649860101191.png" referrerpolicy="no-referrer" alt="1649860101191"></p><p><strong><span>双击点击Done进行确认</span></strong></p><p><span>13、创建普通用户，并配置密码</span></p><p><img src="Images/1649860192571.png" referrerpolicy="no-referrer" alt="1649860192571"></p><p><img src="Images/1649860261956.png" referrerpolicy="no-referrer" alt="1649860261956"></p><p><span>14、结束配置后等待安装，最后reboot重启(出现点小意外，之前记得没有结束配置选择)</span></p><p><img src="Images/1649860338803.png" referrerpolicy="no-referrer" alt="1649860338803"><img src="Images/1649860463143.png" referrerpolicy="no-referrer" alt="1649860463143"></p><p><span>15、CentOS7精简版安装，完美结束，</span></p><p><img src="Images/1649860610503.png" referrerpolicy="no-referrer" alt="1649860610503"></p><p>&nbsp;</p></div>
+</body>
+</html>
