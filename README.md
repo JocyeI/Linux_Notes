@@ -20,6 +20,9 @@
  </a>
 </p>
 
+
+
+
 <h2 align="center">linux.</h2>
 
 * [安装linux虚拟环境](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/%E9%83%A8%E7%BD%B2%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%20Linux%20%E7%B3%BB%E7%BB%9F.md)
@@ -42,4 +45,9 @@
 * [shell脚本进阶](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/Shell%E8%84%9A%E6%9C%AC%E8%BF%9B%E9%98%B6.md)
 
 
+
 <h2 align="center">git.</h2>
+
+* [git常用操作](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/git/%E8%AF%A6%E8%A7%A3git%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.md)
+* [详解git版本控制工具](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/git/%E8%AF%A6%E8%A7%A3%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7git.md)
+
