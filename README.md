@@ -30,4 +30,7 @@
 * [linux寄存器详解](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/linux%E8%AF%A6%E8%A7%A3%E5%AF%84%E5%AD%98%E5%99%A8.md)
 * [linux中断机制详解](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/%E8%AF%A6%E8%A7%A3Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6.md)
 * [linux零拷贝技术](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/linux%E9%9B%B6%E6%8B%B7%E8%B4%9D%E6%8A%80%E6%9C%AF.md)
+* [linux内存分析工具](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/linux-%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7pmap.md)
+* [linux-ab压力测试](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/linux%20ab%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95.md)
+* [linux-curl使用](https://github.com/Walhalla-Summary/Linux_Notes/blob/master/linux/Linux/linux%20Curl%E4%BD%BF%E7%94%A8.md)
 * [SQL执行流程解析](https://github.com/Walhalla-Summary/SQL/blob/master/MySQL/SQL%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E8%AF%A6%E8%A7%A3.md)
